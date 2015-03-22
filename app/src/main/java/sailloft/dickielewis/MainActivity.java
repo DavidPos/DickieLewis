@@ -1,10 +1,12 @@
 package sailloft.dickielewis;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.todddavies.components.progressbar.ProgressWheel;
@@ -13,6 +15,7 @@ import com.todddavies.components.progressbar.ProgressWheel;
 public class MainActivity extends ActionBarActivity {
     LinearLayout mStepLayout;
     ProgressWheel mProgressWheel;
+    Button mBoilButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,15 @@ public class MainActivity extends ActionBarActivity {
         mStepLayout = (LinearLayout)findViewById(R.id.linearStepLayout);
         mStepLayout.setVisibility(View.INVISIBLE);
         mProgressWheel = (ProgressWheel)findViewById(R.id.pw_spinner);
+        mBoilButton = (Button)findViewById(R.id.boilButton);
+
+        mBoilButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BoilTimer.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
