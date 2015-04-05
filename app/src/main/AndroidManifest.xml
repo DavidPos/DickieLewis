@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,12 +19,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BoilTimer"
+            android:name=".ui.BoilTimer"
             android:label="@string/title_activity_boil_timer"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".ui.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sailloft.dickielewis.MainActivity" />
+                android:value=".ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.MashTimer"
+            android:label="@string/title_activity_mash_timer"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
         </activity>
     </application>
 

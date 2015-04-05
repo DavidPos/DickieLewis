@@ -18,9 +18,9 @@
         ProgressWheel:textColor="#ffffff"
         ProgressWheel:textSize="45sp"
 
-        ProgressWheel:rimColor="#330097D6"
+        ProgressWheel:rimColor="#f25019"
         ProgressWheel:barLength="60dp"
-        ProgressWheel:barColor="#0097D6"
+        ProgressWheel:barColor="#f3571c"
         ProgressWheel:barWidth="5dp"
         ProgressWheel:rimWidth="2dp"
         android:layout_below="@+id/beerNameLabel"/>

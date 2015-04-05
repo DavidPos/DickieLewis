@@ -5,4 +5,5 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_boil_timer">BoilTimer</string>
     <string name="no_data_to_display">No Additions set..</string>
+    <string name="title_activity_mash_timer">MashTimer</string>
 </resources>
