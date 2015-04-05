@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import sailloft.dickielewis.model.Boil;
@@ -36,15 +39,20 @@ public class MainActivity extends ActionBarActivity {
     private boolean timersFinished = false;
     private brewCounter mCountDownTimer;
     public static final String TAG = MainActivity.class.getSimpleName();
-
+    private ArrayList<HashMap<String, String>> boilInfo;
     private long timeLeft;
     private int mLength = 0;
+    private List<String> boilTimes;
+    private List<String> boilSummary;
+    private ArrayList<HashMap<String,String>> mashInfo = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        boilTimes =  new ArrayList<String>();
+        boilSummary = new ArrayList<>();
         mStepLayout = (LinearLayout) findViewById(R.id.linearStepLayout);
         mStepLayout.setVisibility(View.INVISIBLE);
         mProgressWheel = (ProgressWheel) findViewById(R.id.pw_spinner);
@@ -72,9 +80,8 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 boilTimers = (Boil) getIntent().getSerializableExtra("boil");
                 mashTimers = (Mash)getIntent().getSerializableExtra("mash");
+                sortTimerData(mashTimers, boilTimers);
 
-                Log.i(TAG, boilTimers + "");
-                Log.i(TAG,mashTimers +"");
 
 
                 mBoilTime = Integer.parseInt(boilTimers.getBoilTime());
@@ -141,6 +148,7 @@ public class MainActivity extends ActionBarActivity {
         public void onTick(long millisUntilFinished) {
             progressOnTick(millisUntilFinished);
 
+
         }
 
         @Override
@@ -172,6 +180,18 @@ public class MainActivity extends ActionBarActivity {
         timeLeft = millisUntilFinished;
         mProgressWheel.setProgress(progress);
         mProgressWheel.setText(hms);
+    }
+
+    private void sortTimerData(Mash mash, Boil boil){
+
+            mashInfo = mash.getSteps();
+            boilInfo = new ArrayList<>();
+            boilInfo = boil.getTimers();
+            for(HashMap<String, String> boilInt : boilInfo){
+                boilTimes.add(boilInt.get("KEY_TIME"));
+                boilSummary.add(boilInt.get("KEY_ADD_INFO"));
+            }
+
     }
 
 

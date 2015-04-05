@@ -56,11 +56,9 @@ public class MashTimer extends ListActivity {
                     mMash = new Mash();
                     mMash.setSteps(mashTimers);
                     mMash.setKeys(keys);
-
                     Intent intent = new Intent(MashTimer.this, MainActivity.class);
 
                     intent.putExtra("mash", mMash);
-
                     startActivity(intent);
                 }
             });
