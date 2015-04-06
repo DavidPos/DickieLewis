@@ -23,12 +23,13 @@
         ProgressWheel:barColor="#f3571c"
         ProgressWheel:barWidth="5dp"
         ProgressWheel:rimWidth="2dp"
-        android:layout_below="@+id/beerNameLabel"/>
+        android:layout_below="@+id/beerNameLabel"
+        android:layout_marginBottom="40dp"/>
 
 
 
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Double IPA"
@@ -47,77 +48,37 @@
         android:layout_alignParentStart="true"
         />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pw_spinner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:weightSum="100"
-        android:id="@+id/linearStepLayout">
+    <com.todddavies.components.progressbar.ProgressWheel
+        android:id="@+id/pw_boil"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        ProgressWheel:text="00"
+        ProgressWheel:textColor="#ffffff"
+        ProgressWheel:textSize="12sp"
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="50">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="CURRENT"
-                android:id="@+id/currentStepLabel"
-                android:textColor="#80ffffff"
-                android:gravity="center_horizontal"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="--"
-                android:id="@+id/humidityValue"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:gravity="center_horizontal"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="50">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="NEXT STEP"
-                android:id="@+id/nextStepLabel"
-                android:textColor="#80ffffff"
-                android:gravity="center_horizontal"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="--"
-                android:id="@+id/precipValue"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:gravity="center_horizontal"/>
-        </LinearLayout>
-    </LinearLayout>
+        ProgressWheel:rimColor="#f25019"
+        ProgressWheel:barLength="10dp"
+        ProgressWheel:barColor="#f3571c"
+        ProgressWheel:barWidth="3dp"
+        ProgressWheel:rimWidth="1dp"
+        android:layout_toLeftOf="@+id/summaryLabel"
+        android:layout_alignBottom="@+id/summaryLabel"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add timers to start..."
         android:id="@+id/summaryLabel"
-        android:layout_below="@+id/linearStepLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
+        android:textSize="25sp"
         android:gravity="center_horizontal"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:paddingLeft="20dp"
+        android:layout_below="@+id/pw_spinner"/>
 
 
     <LinearLayout

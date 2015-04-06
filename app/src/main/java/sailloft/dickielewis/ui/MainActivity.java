@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import sailloft.dickielewis.model.Boil;
 import sailloft.dickielewis.R;
+import sailloft.dickielewis.model.Boil;
 import sailloft.dickielewis.model.Mash;
 
 
 public class MainActivity extends ActionBarActivity {
-    private LinearLayout mStepLayout;
+    private ProgressWheel mBoilPW;
     private ProgressWheel mProgressWheel;
     private TextView mSummary;
     private Button mBoilButton;
@@ -38,26 +37,28 @@ public class MainActivity extends ActionBarActivity {
     private int index = 0;
     private long length = 0;
     private long timerInMinutes;
-    private boolean timersFinished = false;
+    private boolean timersMashFinished = false;
     private brewCounter mCountDownTimer;
     public static final String TAG = MainActivity.class.getSimpleName();
     private ArrayList<HashMap<String, String>> boilInfo = new ArrayList<>();
+    private ArrayList<HashMap<String, String>> mashSteps = new ArrayList<>();
     private long timeLeft;
-    private int mLength = 0;
-    private List<String> boilTimes;
-    private List<String> boilSummary;
-    private ArrayList<HashMap<String,String>> mashInfo = new ArrayList<>();
+    private boolean timersFinished = false;
+
+    private List<String> boilTimes = new ArrayList<>();
+    private List<String> boilSummary = new ArrayList<>();
+    private List<String> mashTemp = new ArrayList<>();
+    private List<String> mashLength = new ArrayList<>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        boilTimes =  new ArrayList<String>();
-        boilSummary = new ArrayList<>();
-        mStepLayout = (LinearLayout) findViewById(R.id.linearStepLayout);
-        mStepLayout.setVisibility(View.INVISIBLE);
         mProgressWheel = (ProgressWheel) findViewById(R.id.pw_spinner);
+        mBoilPW = (ProgressWheel)findViewById(R.id.pw_boil);
+        mBoilPW.setVisibility(View.INVISIBLE);
         mBoilButton = (Button) findViewById(R.id.boilButton);
         mMashButton =(Button)findViewById(R.id.mashButton);
         mSummary = (TextView)findViewById(R.id.summaryLabel);
@@ -82,53 +83,50 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                Log.i(TAG, boilTimers + "");
+                Log.i(TAG, mashTimers + "");
+                if (timersFinished) {
+                    mProgressWheel.spin();
+                    Toast.makeText(MainActivity.this,
+                            "Timers have finished or has not been set",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    state += 1;
+                    if (timersMashFinished) {
+                        mBoilTime = Integer.parseInt(boilTimers.getBoilTime());
+                        length = TimeUnit.MINUTES.toMillis(mBoilTime);
+                        mBoilPW.setVisibility(View.VISIBLE);
+                        mSummary.setText("Next addition: " + boilSummary.get(index));
+                        Log.i(TAG, length + "");
+                    } else {
+                        length = TimeUnit.MINUTES.toMillis(Integer.parseInt(mashLength.get(index)));
+                        mSummary.setText("We are mashing, I hope hope you like mashing too ");
 
-                Log.i(TAG, boilTimers+"");
-                Log.i(TAG, mashTimers+"");
+                    }
+                    mProgressWheel.spin();
+                    switch (state) {
+                        case 1:
+                            //Start Timer
+                            mCountDownTimer = new brewCounter(length, 1000);
+                            mCountDownTimer.start();
+                            break;
+                        //pause
+                        case 2:
+                            mCountDownTimer.cancel();
+                            mProgressWheel.setText("Paused");
+                            mCountDownTimer = new brewCounter(timeLeft, 1000);
+                            break;
+                        //resume
+                        case 3:
+                            mCountDownTimer.start();
+                            state = 1;
+                            break;
 
-                try{sortTimerData(mashTimers, boilTimers);}
-                catch (NullPointerException e){
-                    Toast.makeText(MainActivity.this, "Timer has no data, ", Toast.LENGTH_LONG).show();
-                    Log.i(TAG, e+"");
+                    }
+
+
                 }
-
-
-
-                mBoilTime = Integer.parseInt(boilTimers.getBoilTime());
-
-                state += 1;
-
-
-                length = TimeUnit.MINUTES.toMillis(mBoilTime);
-
-
-                Log.i(TAG, length + "");
-
-
-                mProgressWheel.spin();
-                switch (state) {
-                    case 1:
-                        //Start Timer
-                        mCountDownTimer = new brewCounter(length, 1000);
-                        mCountDownTimer.start();
-                        break;
-                    //pause
-                    case 2:
-                        mCountDownTimer.cancel();
-                        mProgressWheel.setText("Paused");
-                        mCountDownTimer = new brewCounter(timeLeft, 1000);
-                        break;
-                    //resume
-                    case 3:
-                        mCountDownTimer.start();
-                        state = 1;
-                        break;
-
-                }
-
-
             }
-
         });
 
         mProgressWheel.setOnLongClickListener(new View.OnLongClickListener() {
@@ -157,32 +155,44 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             progressOnTick(millisUntilFinished);
+
             timerInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
 
+            if (timersMashFinished) {
 
-            if(boilTimes.contains(timerInMinutes+"")){
-                int itemIndex = boilTimes.indexOf(timerInMinutes+"");
-                mSummary.setText(boilSummary.get(itemIndex + 1));
+                if (boilTimes.contains(timerInMinutes + "")) {
+                    int itemIndex = boilTimes.indexOf(timerInMinutes + "");
+                    mSummary.setText(boilSummary.get(itemIndex));
+
+                }
 
             }
-
-
         }
 
         @Override
         public void onFinish() {
             mProgressWheel.stopSpinning();
-            //mProgressWheel.setText("Done!");
+
             state = 0;
             length = 0;
             index += 1;
 
-            //if (index >= timerLengths.length){
-            //length = 0;
-            //index = 0;
-            mProgressWheel.setText("Finished!");
-            timersFinished = true;
-            //}
+            if (!timersMashFinished) {
+
+                if (index >= mashLength.size()) {
+                    length = 0;
+                    index = 0;
+                    mProgressWheel.setText("Done");
+                    timersMashFinished = true;
+                    mSummary.setText("Mash has finished");
+                    mBoilPW.setText(boilTimes.get(index));
+                }
+                mProgressWheel.setText("Done");
+                mSummary.setText("Heat to " + mashTemp.get(index) + "\u2109");
+            }
+            else{
+                timersFinished = true;
+            }
 
 
         }
@@ -200,13 +210,6 @@ public class MainActivity extends ActionBarActivity {
         mProgressWheel.setText(hms);
     }
 
-    private void sortTimerData(Mash mash, Boil boil) throws NullPointerException{
-
-            mashInfo = mash.getSteps();
-
-
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -224,13 +227,26 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         if (requestCode == 2){
-            mashTimers = (Mash)getIntent().getSerializableExtra("mash");
+            if(resultCode == RESULT_OK) {
+                mashTimers = (Mash) data.getSerializableExtra("mash");
+                Log.i(TAG, mashTimers+"");
+                if (mashTimers != null) {
+                    timersMashFinished = false;
 
 
+                    mashSteps = mashTimers.getSteps();
+
+                    for (HashMap<String, String> mashItem : mashSteps) {
+                        mashTemp.add(mashItem.get("KEY_TEMP"));
+                        mashLength.add(mashItem.get("KEY_MASH_LENGTH"));
+                    }
+                    mSummary.setText("Heat to " + mashTemp.get(index) + "\u2109");
+
+                }
+
+            }
         }
-        if (resultCode == RESULT_CANCELED) {
-            //Write your code if there's no result
-        }
+
     }
 
 

@@ -59,7 +59,8 @@ public class MashTimer extends ListActivity {
                     Intent intent = new Intent(MashTimer.this, MainActivity.class);
 
                     intent.putExtra("mash", mMash);
-                    startActivity(intent);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
             });
             mStepButton.setOnClickListener(new View.OnClickListener() {
