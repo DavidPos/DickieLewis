@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
@@ -27,6 +28,7 @@ import sailloft.dickielewis.model.Mash;
 public class MainActivity extends ActionBarActivity {
     private LinearLayout mStepLayout;
     private ProgressWheel mProgressWheel;
+    private TextView mSummary;
     private Button mBoilButton;
     private Button mMashButton;
     private Boil boilTimers;
@@ -35,11 +37,11 @@ public class MainActivity extends ActionBarActivity {
     private int state = 0;
     private int index = 0;
     private long length = 0;
-    private int[] timerLengths;
+    private long timerInMinutes;
     private boolean timersFinished = false;
     private brewCounter mCountDownTimer;
     public static final String TAG = MainActivity.class.getSimpleName();
-    private ArrayList<HashMap<String, String>> boilInfo;
+    private ArrayList<HashMap<String, String>> boilInfo = new ArrayList<>();
     private long timeLeft;
     private int mLength = 0;
     private List<String> boilTimes;
@@ -58,29 +60,37 @@ public class MainActivity extends ActionBarActivity {
         mProgressWheel = (ProgressWheel) findViewById(R.id.pw_spinner);
         mBoilButton = (Button) findViewById(R.id.boilButton);
         mMashButton =(Button)findViewById(R.id.mashButton);
+        mSummary = (TextView)findViewById(R.id.summaryLabel);
 
 
         mBoilButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BoilTimer.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         mMashButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MashTimer.class);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
         mProgressWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boilTimers = (Boil) getIntent().getSerializableExtra("boil");
-                mashTimers = (Mash)getIntent().getSerializableExtra("mash");
-                sortTimerData(mashTimers, boilTimers);
+
+
+                Log.i(TAG, boilTimers+"");
+                Log.i(TAG, mashTimers+"");
+
+                try{sortTimerData(mashTimers, boilTimers);}
+                catch (NullPointerException e){
+                    Toast.makeText(MainActivity.this, "Timer has no data, ", Toast.LENGTH_LONG).show();
+                    Log.i(TAG, e+"");
+                }
 
 
 
@@ -147,6 +157,12 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             progressOnTick(millisUntilFinished);
+            timerInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+            if(boilTimes.contains(timerInMinutes)){
+                int itemIndex = boilTimes.indexOf(timerInMinutes);
+                mSummary.setText(boilSummary.get(itemIndex+1));
+
+            }
 
 
         }
@@ -182,16 +198,36 @@ public class MainActivity extends ActionBarActivity {
         mProgressWheel.setText(hms);
     }
 
-    private void sortTimerData(Mash mash, Boil boil){
+    private void sortTimerData(Mash mash, Boil boil) throws NullPointerException{
 
             mashInfo = mash.getSteps();
-            boilInfo = new ArrayList<>();
-            boilInfo = boil.getTimers();
-            for(HashMap<String, String> boilInt : boilInfo){
-                boilTimes.add(boilInt.get("KEY_TIME"));
-                boilSummary.add(boilInt.get("KEY_ADD_INFO"));
-            }
 
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                boilTimers = (Boil) getIntent().getSerializableExtra("boil");
+                boilInfo = boilTimers.getTimers();
+                for(HashMap<String, String> boilInt : boilInfo){
+                    boilTimes.add(boilInt.get("KEY_TIME"));
+                    boilSummary.add(boilInt.get("KEY_ADD_INFO"));
+                }
+
+            }
+        }
+        if (requestCode == 2){
+            mashTimers = (Mash)getIntent().getSerializableExtra("mash");
+
+
+        }
+        if (resultCode == RESULT_CANCELED) {
+            //Write your code if there's no result
+        }
     }
 
 
