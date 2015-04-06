@@ -58,8 +58,8 @@ public class BoilTimer extends ListActivity {
                 Intent intent = new Intent(BoilTimer.this, MainActivity.class);
 
                 intent.putExtra("boil",timerBoil);
-
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
         mAddButton.setOnClickListener(new View.OnClickListener() {

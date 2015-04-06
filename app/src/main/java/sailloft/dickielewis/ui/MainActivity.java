@@ -158,9 +158,11 @@ public class MainActivity extends ActionBarActivity {
         public void onTick(long millisUntilFinished) {
             progressOnTick(millisUntilFinished);
             timerInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-            if(boilTimes.contains(timerInMinutes)){
-                int itemIndex = boilTimes.indexOf(timerInMinutes);
-                mSummary.setText(boilSummary.get(itemIndex+1));
+
+
+            if(boilTimes.contains(timerInMinutes+"")){
+                int itemIndex = boilTimes.indexOf(timerInMinutes+"");
+                mSummary.setText(boilSummary.get(itemIndex + 1));
 
             }
 
@@ -211,13 +213,14 @@ public class MainActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
-                boilTimers = (Boil) getIntent().getSerializableExtra("boil");
+                boilTimers = (Boil)data.getSerializableExtra("boil");
+                Log.i(TAG, boilTimers +"");
                 boilInfo = boilTimers.getTimers();
                 for(HashMap<String, String> boilInt : boilInfo){
                     boilTimes.add(boilInt.get("KEY_TIME"));
                     boilSummary.add(boilInt.get("KEY_ADD_INFO"));
                 }
-
+                Log.i(TAG,boilTimes +"" + boilSummary);
             }
         }
         if (requestCode == 2){
