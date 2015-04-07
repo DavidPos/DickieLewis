@@ -44,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<HashMap<String, String>> mashSteps = new ArrayList<>();
     private long timeLeft;
     private boolean timersFinished = false;
+    private int itemIndex;
 
     private List<String> boilTimes = new ArrayList<>();
     private List<String> boilSummary = new ArrayList<>();
@@ -157,21 +158,31 @@ public class MainActivity extends ActionBarActivity {
             progressOnTick(millisUntilFinished);
 
             timerInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+            long timerInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+            Log.i(TAG, timerInMinutes+"");
+
 
             if (timersMashFinished) {
+                if (timerInSeconds != 1) {
+                    int time = Integer.parseInt(timerInMinutes+"") - Integer.parseInt(boilTimes.get(itemIndex));
+                    mBoilPW.setText(time + "");
+                    if (boilTimes.contains(timerInMinutes + "")) {
+                        itemIndex = boilTimes.indexOf(timerInMinutes + "");
+                        mSummary.setText("Next Addition: " + boilSummary.get(itemIndex));
 
-                if (boilTimes.contains(timerInMinutes + "")) {
-                    int itemIndex = boilTimes.indexOf(timerInMinutes + "");
-                    mSummary.setText(boilSummary.get(itemIndex));
+                    }
 
+                }else{
+                    mBoilPW.setVisibility(View.INVISIBLE);
                 }
-
             }
         }
 
         @Override
         public void onFinish() {
             mProgressWheel.stopSpinning();
+
+            mProgressWheel.setText("Done");
 
             state = 0;
             length = 0;
@@ -185,7 +196,10 @@ public class MainActivity extends ActionBarActivity {
                     mProgressWheel.setText("Done");
                     timersMashFinished = true;
                     mSummary.setText("Mash has finished");
-                    mBoilPW.setText(boilTimes.get(index));
+                    int leftTime = Integer.parseInt(boilTimers.getBoilTime()) -  Integer.parseInt(boilTimes.get(index));
+                    String time =  "In " + leftTime;
+                    mBoilPW.setText(time);
+                    mBoilPW.spin();
                 }
                 mProgressWheel.setText("Done");
                 mSummary.setText("Heat to " + mashTemp.get(index) + "\u2109");
@@ -208,6 +222,8 @@ public class MainActivity extends ActionBarActivity {
         timeLeft = millisUntilFinished;
         mProgressWheel.setProgress(progress);
         mProgressWheel.setText(hms);
+
+
     }
 
 
