@@ -5,7 +5,6 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,11 +88,11 @@ public class MashTimer extends ListActivity {
 
 
                             mashTimers.add(mashTimer);
-                            Log.i(TAG, mashTimers.toString());
+
                             mashStepTemp.setText("");
                             mashStepLength.setText("");
                             adapter.notifyDataSetChanged();
-                            Log.i(TAG, mashTimers.toString());
+
 
                         }
                     });
