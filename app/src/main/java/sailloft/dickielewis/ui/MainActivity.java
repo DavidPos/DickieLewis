@@ -186,10 +186,11 @@ public class MainActivity extends ActionBarActivity {
 
                     if (timeLeft <= 0) {
 
-                        if (index <= size) {
+                        if (index < size) {
+                            mSummary.setText("Add " + boilSummary.get(index));
                             index += 1;
 
-                            mSummary.setText("Add " + boilSummary.get(index));
+
 
                         }
                         else{
@@ -284,8 +285,10 @@ public class MainActivity extends ActionBarActivity {
                     boilSummary.add(boilInt.get("KEY_ADD_INFO"));
 
                 }
-            Log.i(TAG, boilMillis +"");
+
                 size = boilMillis.size() - 1;
+                Log.i(TAG, boilMillis +"Size: " + size);
+
 
             }
         }
