@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class BoilTimer extends ListActivity {
     public static final String TAG = BoilTimer.class.getSimpleName();
     private Boil timerBoil;
     private EditText boilLength;
+    private int mBoilTime = 0;
 
 
 
@@ -40,6 +42,16 @@ public class BoilTimer extends ListActivity {
         boilLength = (EditText)findViewById(R.id.boilLengthEditText);
         mAddButton = (Button) findViewById(R.id.addTimersButton);
         mOkButton = (Button) findViewById(R.id.okButton);
+        boilLength.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    mBoilTime = Integer.parseInt(boilLength.getText().toString());
+                    Log.i(TAG, mBoilTime + "");
+                }
+            }
+
+        });
 
 
 
@@ -77,23 +89,28 @@ public class BoilTimer extends ListActivity {
                 boilAlert.setNegativeButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if(Integer.parseInt(mTime.getText().toString()) > mBoilTime){
+                            Toast.makeText(BoilTimer.this,
+                                    "Time you have entered is greater than the boil length!!",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            String time = mTime.getText().toString();
+                            String info = mAddInfo.getText().toString();
 
-                        String time = mTime.getText().toString();
-                        String info = mAddInfo.getText().toString();
+                            boilTimer = new HashMap<String, String>();
 
-                        boilTimer = new HashMap<String, String>();
-
-                        boilTimer.put("KEY_TIME", time);
-                        boilTimer.put("KEY_ADD_INFO", info);
+                            boilTimer.put("KEY_TIME", time);
+                            boilTimer.put("KEY_ADD_INFO", info);
 
 
-                        boilTimers.add(boilTimer);
-                        Log.i(TAG, boilTimers.toString());
-                        mTime.setText("");
-                        mAddInfo.setText("");
-                        adapter.notifyDataSetChanged();
-                        Log.i(TAG, boilTimers.toString());
-
+                            boilTimers.add(boilTimer);
+                            Log.i(TAG, boilTimers.toString());
+                            mTime.setText("");
+                            mAddInfo.setText("");
+                            adapter.notifyDataSetChanged();
+                            Log.i(TAG, boilTimers.toString());
+                        }
                     }
                 });
                 boilAlert.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {

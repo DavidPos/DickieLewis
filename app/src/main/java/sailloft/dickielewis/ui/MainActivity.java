@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
     private int index = 0;
     private long length = 0;
     private long timerInMinutes;
-   
+
     private boolean timersMashFinished = false;
     private brewCounter mCountDownTimer;
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -203,7 +203,7 @@ public class MainActivity extends ActionBarActivity {
 
                         }
                         else{
-
+                            mp.start();
                             mBoilPW.setVisibility(View.INVISIBLE);
                             inLabel.setVisibility(View.INVISIBLE);
                             mSummary.setText("All Additions added...");
@@ -240,6 +240,7 @@ public class MainActivity extends ActionBarActivity {
                     index = 0;
                     mProgressWheel.setText("Done");
                     timersMashFinished = true;
+                    mp.start();
                     mSummary.setText("Mash has finished");
                     timeLeft = TimeUnit.MINUTES.toMillis(Long.parseLong(boilTimers.getBoilTime())) - boilMillis.get(index);
                     mBoilPW.setText("--");
@@ -252,6 +253,7 @@ public class MainActivity extends ActionBarActivity {
                 }else {
                     mProgressWheel.setText("Done");
                     inLabel.setText("Heat to " + mashTemp.get(index) + "\u2109");
+                    mp.start();
                 }
             }
             else{
