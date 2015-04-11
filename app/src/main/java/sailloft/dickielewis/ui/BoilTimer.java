@@ -30,7 +30,7 @@ public class BoilTimer extends ListActivity {
     public static final String TAG = BoilTimer.class.getSimpleName();
     private Boil timerBoil;
     private EditText boilLength;
-    private int mBoilTime = 0;
+    private int mBoilTime;
 
 
 
@@ -42,16 +42,7 @@ public class BoilTimer extends ListActivity {
         boilLength = (EditText)findViewById(R.id.boilLengthEditText);
         mAddButton = (Button) findViewById(R.id.addTimersButton);
         mOkButton = (Button) findViewById(R.id.okButton);
-        boilLength.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    mBoilTime = Integer.parseInt(boilLength.getText().toString());
-                    Log.i(TAG, mBoilTime + "");
-                }
-            }
-
-        });
+        
 
 
 
@@ -77,6 +68,7 @@ public class BoilTimer extends ListActivity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBoilTime = Integer.parseInt(boilLength.getText().toString());
                 final AlertDialog.Builder boilAlert = new AlertDialog.Builder(BoilTimer.this);
                 LayoutInflater inflater = getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.boil_dialog, null);
@@ -89,6 +81,7 @@ public class BoilTimer extends ListActivity {
                 boilAlert.setNegativeButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Log.i(TAG, mBoilTime + "");
                         if(Integer.parseInt(mTime.getText().toString()) > mBoilTime){
                             Toast.makeText(BoilTimer.this,
                                     "Time you have entered is greater than the boil length!!",
