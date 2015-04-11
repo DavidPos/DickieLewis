@@ -187,8 +187,9 @@ public class MainActivity extends ActionBarActivity {
                     if (timeLeft <= 0) {
 
                         if (index < size) {
-                            mSummary.setText("Add " + boilSummary.get(index));
+
                             index += 1;
+                            mSummary.setText("Add " + boilSummary.get(index));
 
 
 
