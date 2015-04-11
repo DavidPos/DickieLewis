@@ -91,8 +91,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BOIL"
-            android:id="@+id/boilButton"
+            android:text="@string/mash_button_label"
+            android:id="@+id/mashButton"
+
             android:layout_weight="1"
             android:background="#40ffffff"
             android:textColor="#ffffffff"/>
@@ -100,8 +101,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MASH"
-            android:id="@+id/mashButton"
+            android:text="@string/boil_button_label"
+            android:id="@+id/boilButton"
             android:layout_weight="1"
             android:background="#40ffffff"
             android:textColor="#ffffffff"

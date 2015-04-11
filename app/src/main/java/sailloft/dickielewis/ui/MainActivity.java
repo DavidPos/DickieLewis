@@ -208,8 +208,7 @@ public class MainActivity extends ActionBarActivity {
                 }else{
                     inLabel.setVisibility(View.INVISIBLE);
                     mBoilPW.setVisibility(View.INVISIBLE);
-                    mSummary.setText("Finished!!");
-                    timersFinished = true;
+
 
                 }
             }
@@ -248,6 +247,8 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
             else{
+                mSummary.setText("Finished!!");
+                
                 timersFinished = true;
             }
 

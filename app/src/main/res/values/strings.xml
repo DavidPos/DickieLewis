@@ -6,4 +6,6 @@
     <string name="title_activity_boil_timer">BoilTimer</string>
     <string name="no_data_to_display">No Additions set..</string>
     <string name="title_activity_mash_timer">MashTimer</string>
+    <string name="boil_button_label">BOIL</string>
+    <string name="mash_button_label">MASH</string>
 </resources>
