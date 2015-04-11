@@ -171,7 +171,7 @@ public class MainActivity extends ActionBarActivity {
             progressOnTick(timeLeft, mBoilPW);
             Log.i(TAG, timeLeft +"");
             timerInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-            timeLeft = millisUntilFinished - boilMillis.get(index);
+            timeLeft = (millisUntilFinished - boilMillis.get(index)) - 1000;
 
             long timerInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
@@ -248,7 +248,7 @@ public class MainActivity extends ActionBarActivity {
             }
             else{
                 mSummary.setText("Finished!!");
-                
+
                 timersFinished = true;
             }
 
