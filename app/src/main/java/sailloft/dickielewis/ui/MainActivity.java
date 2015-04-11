@@ -95,8 +95,8 @@ public class MainActivity extends ActionBarActivity {
         mProgressWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (timersFinished) {
+                //checking if the timers have finished or have not been set
+                if (timersFinished || !timersSet() ) {
                     mProgressWheel.spin();
                     Toast.makeText(MainActivity.this,
                             "Timers have finished or has not been set",
@@ -209,7 +209,7 @@ public class MainActivity extends ActionBarActivity {
                     inLabel.setVisibility(View.INVISIBLE);
                     mBoilPW.setVisibility(View.INVISIBLE);
                     mSummary.setText("Finished!!");
-
+                    timersFinished = true;
 
                 }
             }
@@ -307,7 +307,7 @@ public class MainActivity extends ActionBarActivity {
                         mashLength.add(mashItem.get("KEY_MASH_LENGTH"));
 
                     }
-
+                    mProgressWheel.setText(mashLength.get(0));
                     inLabel.setText("Heat to " + mashTemp.get(index) + "\u2109");
 
                 }
@@ -316,7 +316,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
     }
+    private Boolean timersSet(){
+        if (mashTimers != null && boilTimers != null){
+            return true;
+        }
+        else{ return false;}
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
