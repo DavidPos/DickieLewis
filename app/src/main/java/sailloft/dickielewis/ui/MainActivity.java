@@ -1,6 +1,9 @@
 package sailloft.dickielewis.ui;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
@@ -38,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
     private int index = 0;
     private long length = 0;
     private long timerInMinutes;
-    private List<String> boilAddTime = new ArrayList<>();
+   
     private boolean timersMashFinished = false;
     private brewCounter mCountDownTimer;
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -53,6 +56,7 @@ public class MainActivity extends ActionBarActivity {
     private List<String> boilSummary = new ArrayList<>();
     private List<String> mashTemp = new ArrayList<>();
     private List<String> mashLength = new ArrayList<>();
+    private MediaPlayer mp;
 
 
 
@@ -60,6 +64,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        mp = MediaPlayer.create(getApplicationContext(), notification);
+
         mProgressWheel = (ProgressWheel) findViewById(R.id.pw_spinner);
         inLabel = (TextView)findViewById(R.id.inLabel);
         mBoilPW = (ProgressWheel)findViewById(R.id.pw_boil);
@@ -190,6 +197,7 @@ public class MainActivity extends ActionBarActivity {
 
                             index += 1;
                             mSummary.setText("Add " + boilSummary.get(index));
+                            mp.start();
 
 
 
