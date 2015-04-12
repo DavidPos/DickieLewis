@@ -64,6 +64,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         mp = MediaPlayer.create(getApplicationContext(), notification);
 
@@ -154,6 +155,7 @@ public class MainActivity extends ActionBarActivity {
                 mCountDownTimer.cancel();
                 mProgressWheel.stopSpinning();
                 mProgressWheel.setText("00:00:00");
+                mSummary.setText("Timer has been cancelled");
                 Toast.makeText(MainActivity.this, "Timer has been cancelled!!!!", Toast.LENGTH_LONG).show();
                 return true;
             }
@@ -302,6 +304,7 @@ public class MainActivity extends ActionBarActivity {
 
                 size = boilMillis.size() - 1;
                 Log.i(TAG, boilMillis +"Size: " + size);
+                timersFinished = false;
 
 
             }
