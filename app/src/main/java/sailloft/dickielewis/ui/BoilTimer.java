@@ -74,17 +74,24 @@ public class BoilTimer extends ListActivity {
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String [] keys = {"KEY_TIME", "KEY_ADD_INFO"};
-                timerBoil = new Boil();
-                timerBoil.setTimers(boilTimers);
-                timerBoil.setBoilTime(boilLength.getText().toString());
-                timerBoil.setKeys(keys);
+                if (boilTimers.size() == 0 || boilLength == null){
+                    Toast.makeText(BoilTimer.this, "Boil timer has not been set", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(BoilTimer.this, MainActivity.class);
+                    startActivity(intent);
+                }else {
 
-                Intent intent = new Intent(BoilTimer.this, MainActivity.class);
+                    String[] keys = {"KEY_TIME", "KEY_ADD_INFO"};
+                    timerBoil = new Boil();
+                    timerBoil.setTimers(boilTimers);
+                    timerBoil.setBoilTime(boilLength.getText().toString());
+                    timerBoil.setKeys(keys);
 
-                intent.putExtra("boil",timerBoil);
-                setResult(RESULT_OK, intent);
-                finish();
+                    Intent intent = new Intent(BoilTimer.this, MainActivity.class);
+
+                    intent.putExtra("boil", timerBoil);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
         });
         mAddButton.setOnClickListener(new View.OnClickListener() {
