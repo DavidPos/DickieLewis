@@ -76,6 +76,7 @@ public class BoilTimer extends ListActivity {
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 if (boilTimers.size() == 0 || boilLength == null){
                     Toast.makeText(BoilTimer.this, "Boil timer has not been set", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(BoilTimer.this, MainActivity.class);
@@ -99,6 +100,7 @@ public class BoilTimer extends ListActivity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 mBoilTime = Integer.parseInt(boilLength.getText().toString());
                 final AlertDialog.Builder boilAlert = new AlertDialog.Builder(BoilTimer.this);
                 LayoutInflater inflater = getLayoutInflater();
@@ -112,6 +114,7 @@ public class BoilTimer extends ListActivity {
                 boilAlert.setNegativeButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         Log.i(TAG, mBoilTime + "");
                         if(Integer.parseInt(mTime.getText().toString()) > mBoilTime){
                             Toast.makeText(BoilTimer.this,

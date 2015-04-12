@@ -84,6 +84,7 @@ public class MainActivity extends ActionBarActivity {
         mBoilButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 mBoilPW.setVisibility(View.INVISIBLE);
 
                 Intent intent = new Intent(MainActivity.this, BoilTimer.class);
@@ -93,6 +94,7 @@ public class MainActivity extends ActionBarActivity {
         mMashButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 mBoilPW.setVisibility(View.INVISIBLE);
 
                 Intent intent = new Intent(MainActivity.this, MashTimer.class);
@@ -103,13 +105,19 @@ public class MainActivity extends ActionBarActivity {
         mProgressWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 //checking if the timers have finished or have not been set
                 if (timersFinished || !timersSet() ) {
-
-                    mProgressWheel.spin();
-                    Toast.makeText(MainActivity.this,
-                            "Timers have finished or has not been set",
-                     Toast.LENGTH_LONG).show();
+                    if (!timersSet()){
+                        Toast.makeText(MainActivity.this,
+                                "Timers has not been set",
+                                Toast.LENGTH_LONG).show();
+                    }else {
+                        mProgressWheel.spin();
+                        Toast.makeText(MainActivity.this,
+                                "Timers have finished",
+                                Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     state += 1;
                     if (timersMashFinished) {
@@ -153,12 +161,14 @@ public class MainActivity extends ActionBarActivity {
         mProgressWheel.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 mCountDownTimer.cancel();
                 mProgressWheel.stopSpinning();
                 mProgressWheel.setText("00:00:00");
                 mSummary.setText("Timer has been cancelled");
                 Toast.makeText(MainActivity.this, "Timer has been cancelled!!!!", Toast.LENGTH_LONG).show();
                 return true;
+
             }
         });
 
@@ -247,7 +257,7 @@ public class MainActivity extends ActionBarActivity {
                     mp.start();
                     mSummary.setText("Mash has finished");
                     timeLeft = TimeUnit.MINUTES.toMillis(Long.parseLong(boilTimers.getBoilTime())) - boilMillis.get(index);
-                    mBoilPW.setText("--");
+                    mBoilPW.setText("");
                     mBoilPW.spin();
                     mBoilPW.setVisibility(View.VISIBLE);
                     mSummary.setVisibility(View.VISIBLE);
@@ -255,12 +265,14 @@ public class MainActivity extends ActionBarActivity {
                     itemTime = Integer.parseInt(boilTimes.get(0));
 
                 }else {
+                    //still another step in mash timers
                     mProgressWheel.setText("Done");
                     inLabel.setText("Heat to " + mashTemp.get(index) + "\u2109");
                     mp.start();
                 }
             }
             else{
+                //both mash and boil timers have finished
                 mSummary.setText("Finished!!");
                 mp.start();
                 timersFinished = true;
@@ -336,10 +348,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
     private Boolean timersSet(){
-        if (mashTimers != null && boilTimers != null){
-            return true;
-        }
-        else{ return false;}
+        return mashTimers != null && boilTimers != null;
 
     }
 

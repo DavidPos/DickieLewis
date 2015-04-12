@@ -74,6 +74,7 @@ public class MashTimer extends ListActivity {
             mOkButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                     if (mashTimers.size() == 0) {
                         Toast.makeText(MashTimer.this, "No steps have been set", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MashTimer.this, MainActivity.class);
@@ -96,6 +97,8 @@ public class MashTimer extends ListActivity {
             mStepButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                     final AlertDialog.Builder mashAlert = new AlertDialog.Builder(MashTimer.this);
                     LayoutInflater inflater = getLayoutInflater();
                     final View dialogView = inflater.inflate(R.layout.mash_dialog, null);
