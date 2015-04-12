@@ -105,6 +105,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 //checking if the timers have finished or have not been set
                 if (timersFinished || !timersSet() ) {
+
                     mProgressWheel.spin();
                     Toast.makeText(MainActivity.this,
                             "Timers have finished or has not been set",
