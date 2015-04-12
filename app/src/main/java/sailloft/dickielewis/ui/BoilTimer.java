@@ -12,14 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import sailloft.dickielewis.model.Boil;
-import sailloft.dickielewis.adapters.BoilTimerListAdapter;
 import sailloft.dickielewis.R;
+import sailloft.dickielewis.adapters.BoilTimerListAdapter;
+import sailloft.dickielewis.model.Boil;
+import sailloft.dickielewis.utility.SwipeDismissListViewTouchListener;
 
 
 public class BoilTimer extends ListActivity {
@@ -48,6 +50,26 @@ public class BoilTimer extends ListActivity {
 
         final BoilTimerListAdapter adapter = new BoilTimerListAdapter(BoilTimer.this, boilTimers);
         setListAdapter(adapter);
+        ListView listView = getListView();
+        // Create a ListView-specific touch listener. ListViews are given special treatment because
+        // by default they handle touches for their list items... i.e. they're in charge of drawing
+        // the pressed state (the list selector), handling list item clicks, etc.
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        listView,
+                        new SwipeDismissListViewTouchListener.OnDismissCallback() {
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    adapter.remove(adapter.getItem(position));
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+        listView.setOnTouchListener(touchListener);
+        // Setting this scroll listener is required to ensure that during ListView scrolling,
+        // we don't look for swipes.
+        listView.setOnScrollListener(touchListener.makeScrollListener());
 
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override

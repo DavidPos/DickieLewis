@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import java.util.HashMap;
 import sailloft.dickielewis.R;
 import sailloft.dickielewis.adapters.MashListAdapter;
 import sailloft.dickielewis.model.Mash;
+import sailloft.dickielewis.utility.SwipeDismissListViewTouchListener;
 
 
 public class MashTimer extends ListActivity {
@@ -34,32 +37,54 @@ public class MashTimer extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mash_timer);
 
-
-
-
-
             mashTimers = new ArrayList<>();
             boilLength = (EditText)findViewById(R.id.boilLengthEditText);
             mStepButton = (Button) findViewById(R.id.addStepButton);
             mOkButton = (Button) findViewById(R.id.okButton);
 
-
-
             final MashListAdapter adapter = new MashListAdapter(MashTimer.this, mashTimers);
             setListAdapter(adapter);
+        ListView listView = getListView();
+        // Create a ListView-specific touch listener. ListViews are given special treatment because
+        // by default they handle touches for their list items... i.e. they're in charge of drawing
+        // the pressed state (the list selector), handling list item clicks, etc.
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        listView,
+                        new SwipeDismissListViewTouchListener.OnDismissCallback() {
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    adapter.remove(adapter.getItem(position));
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+        listView.setOnTouchListener(touchListener);
+        // Setting this scroll listener is required to ensure that during ListView scrolling,
+        // we don't look for swipes.
+        listView.setOnScrollListener(touchListener.makeScrollListener());
 
             mOkButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String [] keys = {"KEY_TEMP", "KEY_MASH_LENGTH"};
-                    mMash = new Mash();
-                    mMash.setSteps(mashTimers);
-                    mMash.setKeys(keys);
-                    Intent intent = new Intent(MashTimer.this, MainActivity.class);
+                    if (mashTimers.size() == 0) {
+                        Toast.makeText(MashTimer.this, "No steps have been set", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MashTimer.this, MainActivity.class);
+                        startActivity(intent);
 
-                    intent.putExtra("mash", mMash);
-                    setResult(RESULT_OK, intent);
-                    finish();
+
+                    }else {
+                        String[] keys = {"KEY_TEMP", "KEY_MASH_LENGTH"};
+                        mMash = new Mash();
+                        mMash.setSteps(mashTimers);
+                        mMash.setKeys(keys);
+                        Intent intent = new Intent(MashTimer.this, MainActivity.class);
+
+                        intent.putExtra("mash", mMash);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
             });
             mStepButton.setOnClickListener(new View.OnClickListener() {
