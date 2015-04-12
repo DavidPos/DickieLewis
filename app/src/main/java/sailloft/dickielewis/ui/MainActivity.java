@@ -261,6 +261,7 @@ public class MainActivity extends ActionBarActivity {
                 mSummary.setText("Finished!!");
                 mp.start();
                 timersFinished = true;
+                index = 0;
             }
 
 
@@ -320,6 +321,8 @@ public class MainActivity extends ActionBarActivity {
 
                     }
                     mProgressWheel.setText(mashLength.get(0));
+                    inLabel.setVisibility(View.VISIBLE);
+                    mSummary.setVisibility(View.INVISIBLE);
                     inLabel.setText("Heat to " + mashTemp.get(index) + "\u2109");
 
                 }

@@ -36,7 +36,7 @@
         android:width="250dp"
         android:lines="1"
         android:maxLines="1"
-        android:inputType="number"/>
+        />
 
     <EditText
         android:layout_width="wrap_content"
