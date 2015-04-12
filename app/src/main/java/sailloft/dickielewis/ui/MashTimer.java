@@ -5,6 +5,7 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import sailloft.dickielewis.R;
@@ -31,6 +34,8 @@ public class MashTimer extends ListActivity {
     public static final String TAG = MashTimer.class.getSimpleName();
     private Mash mMash;
     private EditText boilLength;
+    private Integer firstValue;
+    private Integer secondValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class MashTimer extends ListActivity {
                                 for (int position : reverseSortedPositions) {
                                     adapter.remove(adapter.getItem(position));
                                 }
+                                Collections.sort(mashTimers, new MapComparator("KEY_TEMP"));
                                 adapter.notifyDataSetChanged();
                             }
                         });
@@ -113,7 +119,8 @@ public class MashTimer extends ListActivity {
 
 
                             mashTimers.add(mashTimer);
-
+                            Collections.sort(mashTimers, new MapComparator("KEY_TEMP"));
+                            Log.i(TAG,mashTimers +"");
                             mashStepTemp.setText("");
                             mashStepLength.setText("");
                             adapter.notifyDataSetChanged();
@@ -135,7 +142,24 @@ public class MashTimer extends ListActivity {
             });
 
         }
+    class MapComparator implements Comparator<HashMap<String, String>>
+    {
+        private final String key;
 
+        public MapComparator(String key)
+        {
+            this.key = key;
+        }
+
+        public int compare(HashMap<String, String> first,
+                           HashMap<String, String> second)
+        {
+            // TODO: Null checking, both for maps and values
+            firstValue = Integer.parseInt(first.get(key));
+            secondValue = Integer.parseInt(second.get(key));
+            return firstValue.compareTo(secondValue);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import sailloft.dickielewis.R;
@@ -130,6 +132,7 @@ public class BoilTimer extends ListActivity {
                             Log.i(TAG, boilTimers.toString());
                             mTime.setText("");
                             mAddInfo.setText("");
+                            Collections.sort(boilTimers, new MapComparator("KEY_TIME"));
                             adapter.notifyDataSetChanged();
                             Log.i(TAG, boilTimers.toString());
                         }
@@ -151,6 +154,23 @@ public class BoilTimer extends ListActivity {
 
 
 
+    }
+    class MapComparator implements Comparator<HashMap<String, String>>
+    {
+        private final String key;
+
+        public MapComparator(String key)
+        {
+            this.key = key;
+        }
+
+        public int compare(HashMap<String, String> first,
+                           HashMap<String, String> second)
+        {
+            // TODO: Null checking, both for maps and values
+            String firstValue = first.get(key);
+            String secondValue = second.get(key);
+        }
     }
 
     @Override
