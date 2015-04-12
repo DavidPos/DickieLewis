@@ -33,7 +33,10 @@
         android:layout_below="@+id/addInfoLabel"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
-        android:width="250dp"/>
+        android:width="250dp"
+        android:lines="1"
+        android:maxLines="1"
+        android:inputType="number"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,6 +45,10 @@
         android:id="@+id/timeOfAddEditText"
         android:layout_below="@+id/addTimeLabel"
         android:layout_centerHorizontal="true"
-        android:width="100dp"/>
+        android:width="100dp"
+        android:lines="1"
+        android:linksClickable="false"
+        android:maxLines="1"
+        android:inputType="number"/>
 
 </RelativeLayout>

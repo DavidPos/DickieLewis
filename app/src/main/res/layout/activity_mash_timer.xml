@@ -59,7 +59,6 @@
             android:layout_marginBottom="8dp"
             android:divider="@null"
             android:dividerHeight="0dp"
-            android:layout_above="@id/linearButtonLayout"
             android:stackFromBottom="false"
             android:paddingTop="10dp"/>
     </RelativeLayout>

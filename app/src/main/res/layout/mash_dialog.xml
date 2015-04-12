@@ -33,7 +33,9 @@
         android:layout_below="@+id/lengthStepLabel"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
-        android:width="100dp"/>
+        android:width="100dp"
+        android:maxLines="1"
+        android:inputType="number"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -43,6 +45,8 @@
         android:layout_below="@+id/tempStepLabel"
         android:layout_centerHorizontal="true"
         android:width="100dp"
-        android:focusable="true"/>
+        android:focusable="true"
+        android:maxLines="1"
+        android:inputType="number"/>
 
 </RelativeLayout>
