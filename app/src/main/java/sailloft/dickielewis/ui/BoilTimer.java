@@ -42,7 +42,7 @@ public class BoilTimer extends ListActivity {
         boilLength = (EditText)findViewById(R.id.boilLengthEditText);
         mAddButton = (Button) findViewById(R.id.addTimersButton);
         mOkButton = (Button) findViewById(R.id.okButton);
-        
+
 
 
 

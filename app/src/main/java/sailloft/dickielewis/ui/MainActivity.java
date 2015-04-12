@@ -203,7 +203,7 @@ public class MainActivity extends ActionBarActivity {
 
                         }
                         else{
-                            mp.start();
+
                             mBoilPW.setVisibility(View.INVISIBLE);
                             inLabel.setVisibility(View.INVISIBLE);
                             mSummary.setText("All Additions added...");
@@ -227,6 +227,7 @@ public class MainActivity extends ActionBarActivity {
             mProgressWheel.stopSpinning();
             Log.i(TAG, timeLeft +"");
             mProgressWheel.setText("Done");
+            mp.start();
 
             state = 0;
             length = 0;
@@ -258,7 +259,7 @@ public class MainActivity extends ActionBarActivity {
             }
             else{
                 mSummary.setText("Finished!!");
-
+                mp.start();
                 timersFinished = true;
             }
 
