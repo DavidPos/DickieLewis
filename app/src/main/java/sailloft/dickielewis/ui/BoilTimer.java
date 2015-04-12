@@ -170,6 +170,7 @@ public class BoilTimer extends ListActivity {
             // TODO: Null checking, both for maps and values
             String firstValue = first.get(key);
             String secondValue = second.get(key);
+            return secondValue.compareTo(firstValue);
         }
     }
 
