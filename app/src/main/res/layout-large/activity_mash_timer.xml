@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="sailloft.dickielewis.ui.MashTimer"
+                android:background="@drawable/bg_gradient">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data_to_display"
+            android:id="@android:id/empty"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="25sp"
+            android:textColor="#ffffffff"/>
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:focusableInTouchMode="false"
+            android:id="@+id/linearButtonLayout">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:id="@+id/okButton"
+                android:layout_weight="1"
+                android:background="#40ffffff"
+                android:textColor="#ffffffff"
+                android:textAlignment="center"
+                android:height="60dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ADD STEP"
+                android:id="@+id/addStepButton"
+                android:layout_weight="1"
+                android:background="#40ffffff"
+                android:textColor="#ffffffff"
+                android:layout_marginLeft="2dp"
+                android:height="60dp"/>
+        </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@android:id/list"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:stackFromBottom="false"
+            android:paddingTop="10dp"/>
+    </RelativeLayout>
+

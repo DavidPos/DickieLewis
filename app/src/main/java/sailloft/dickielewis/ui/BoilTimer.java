@@ -34,7 +34,7 @@ public class BoilTimer extends ListActivity {
     public static final String TAG = BoilTimer.class.getSimpleName();
     private Boil timerBoil;
     private EditText boilLength;
-    private int mBoilTime;
+    private Integer mBoilTime;
 
 
 
@@ -101,57 +101,66 @@ public class BoilTimer extends ListActivity {
             @Override
             public void onClick(View v) {
                 v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
-                mBoilTime = Integer.parseInt(boilLength.getText().toString());
-                final AlertDialog.Builder boilAlert = new AlertDialog.Builder(BoilTimer.this);
-                LayoutInflater inflater = getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.boil_dialog, null);
-                boilAlert.setTitle("New Addition");
-                boilAlert.setView(dialogView);
-                final EditText mTime = (EditText) dialogView.findViewById(R.id.timeOfAddEditText);
-                mTime.requestFocus();
-                final EditText mAddInfo = (EditText) dialogView.findViewById(R.id.addInfoText);
 
-                boilAlert.setNegativeButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                if (boilLength.getText().toString().trim().length() > 0) {
+                    mBoilTime = Integer.parseInt(boilLength.getText().toString());
+                    final AlertDialog.Builder boilAlert = new AlertDialog.Builder(BoilTimer.this);
+                    LayoutInflater inflater = getLayoutInflater();
+                    final View dialogView = inflater.inflate(R.layout.boil_dialog, null);
+                    boilAlert.setTitle("New Addition");
+                    boilAlert.setView(dialogView);
+                    final EditText mTime = (EditText) dialogView.findViewById(R.id.timeOfAddEditText);
+                    mTime.requestFocus();
+                    final EditText mAddInfo = (EditText) dialogView.findViewById(R.id.addInfoText);
 
-                        Log.i(TAG, mBoilTime + "");
-                        if(Integer.parseInt(mTime.getText().toString()) > mBoilTime){
-                            Toast.makeText(BoilTimer.this,
-                                    "Time you have entered is greater than the boil length!!",
-                                    Toast.LENGTH_LONG).show();
+
+                    boilAlert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Log.i(TAG, mBoilTime + "");
+                            if (Integer.parseInt(mTime.getText().toString()) > mBoilTime) {
+                                Toast.makeText(BoilTimer.this,
+                                        "Time you have entered is greater than the boil length!!",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                String time = mTime.getText().toString();
+                                String info = mAddInfo.getText().toString();
+
+                                boilTimer = new HashMap<String, String>();
+
+                                boilTimer.put("KEY_TIME", time);
+                                boilTimer.put("KEY_ADD_INFO", info);
+
+
+                                boilTimers.add(boilTimer);
+                                Log.i(TAG, boilTimers.toString());
+                                mTime.setText("");
+                                mAddInfo.setText("");
+                                Collections.sort(boilTimers, new MapComparator("KEY_TIME"));
+                                adapter.notifyDataSetChanged();
+                                Log.i(TAG, boilTimers.toString());
+                            }
                         }
-                        else {
-                            String time = mTime.getText().toString();
-                            String info = mAddInfo.getText().toString();
-
-                            boilTimer = new HashMap<String, String>();
-
-                            boilTimer.put("KEY_TIME", time);
-                            boilTimer.put("KEY_ADD_INFO", info);
-
-
-                            boilTimers.add(boilTimer);
-                            Log.i(TAG, boilTimers.toString());
-                            mTime.setText("");
-                            mAddInfo.setText("");
-                            Collections.sort(boilTimers, new MapComparator("KEY_TIME"));
-                            adapter.notifyDataSetChanged();
-                            Log.i(TAG, boilTimers.toString());
+                    });
+                    boilAlert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
                         }
-                    }
-                });
-                boilAlert.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                    });
 
-                boilAlert.show();
+                    boilAlert.show();
 
 
+                }
+                else{
+                    Toast.makeText(BoilTimer.this,
+                            "You need to enter a boil length!!",
+                            Toast.LENGTH_LONG).show();
+                }
             }
+
         });
 
 

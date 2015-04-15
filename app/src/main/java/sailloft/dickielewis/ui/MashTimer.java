@@ -108,7 +108,7 @@ public class MashTimer extends ListActivity {
                     mashStepTemp.requestFocus();
                     final EditText mashStepLength = (EditText) dialogView.findViewById(R.id.lengthMashText);
 
-                    mashAlert.setNegativeButton("Add", new DialogInterface.OnClickListener() {
+                    mashAlert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -131,7 +131,7 @@ public class MashTimer extends ListActivity {
 
                         }
                     });
-                    mashAlert.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    mashAlert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

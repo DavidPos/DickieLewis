@@ -258,7 +258,7 @@ public class MainActivity extends ActionBarActivity {
                     mSummary.setText("Mash has finished");
                     timeLeft = TimeUnit.MINUTES.toMillis(Long.parseLong(boilTimers.getBoilTime())) - boilMillis.get(index);
                     mBoilPW.setText("");
-                    mBoilPW.spin();
+                    
                     mBoilPW.setVisibility(View.VISIBLE);
                     mSummary.setVisibility(View.VISIBLE);
                     inLabel.setText("In..");
