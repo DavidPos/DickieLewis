@@ -1,5 +1,7 @@
 # DickieLewis
-Project for Android
+Home Brew Timer
+Mash timer and a boil timer that you can add in you schedule for addtions to the boil.
+
 #Copyright
 Copyright [2015] [David Postlethwaite]
 
