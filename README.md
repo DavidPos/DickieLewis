@@ -1,5 +1,5 @@
 # DickieLewis
-Home Brew Timer
+##Home Brew Timer
 Mash timer and a boil timer that you can add in you schedule for addtions to the boil.
 
 #Copyright
