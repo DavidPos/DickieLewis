@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.todddavies.components.progressbar.ProgressWheel;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import sailloft.dickielewis.R;
 import sailloft.dickielewis.model.Boil;
 import sailloft.dickielewis.model.Mash;
+import sailloft.dickielewis.progressWheel.ProgressWheel;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -63,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.alt_activity_main);
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         mp = MediaPlayer.create(getApplicationContext(), notification);
@@ -113,7 +112,7 @@ public class MainActivity extends ActionBarActivity {
                                 "Timers has not been set",
                                 Toast.LENGTH_LONG).show();
                     }else {
-                        mProgressWheel.spin();
+                        mProgressWheel.startSpinning();
                         Toast.makeText(MainActivity.this,
                                 "Timers have finished",
                                 Toast.LENGTH_LONG).show();
@@ -131,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
                         inLabel.setText("We are mashing, I hope you like mashing too ");
 
                     }
-                    mProgressWheel.spin();
+                    mProgressWheel.startSpinning();
                     switch (state) {
                         case 1:
                             //Start Timer
