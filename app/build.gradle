@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+compileSdkVersion 21
+buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "sailloft.dickielewis"
@@ -19,7 +19,12 @@ android {
     }
 }
 repositories {
-    maven { url "https://jitpack.io" }
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+
+
 }
 
 
@@ -28,6 +33,6 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.github.Todd-Davies:ProgressWheel:1.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+
 }
