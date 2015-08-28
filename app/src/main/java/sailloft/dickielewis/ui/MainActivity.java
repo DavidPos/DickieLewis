@@ -11,9 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,8 +31,7 @@ public class MainActivity extends ActionBarActivity {
     private ProgressWheel mBoilPW;
     private ProgressWheel mProgressWheel;
     private TextView mSummary;
-    private Button mBoilButton;
-    private Button mMashButton;
+
     private TextView inLabel;
     private Boil boilTimers;
     private Mash mashTimers;
@@ -40,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
     private int index = 0;
     private long length = 0;
     private long timerInMinutes;
+    private FloatingActionButton fabBoil;
+    private FloatingActionButton fabMash;
 
     private boolean timersMashFinished = false;
     private brewCounter mCountDownTimer;
@@ -72,25 +74,28 @@ public class MainActivity extends ActionBarActivity {
         mBoilPW = (ProgressWheel)findViewById(R.id.pw_boil);
         inLabel.setVisibility(View.VISIBLE);
         inLabel.setText("Add Timers to start....");
+        fabBoil = (FloatingActionButton) findViewById(R.id.boilButton);
+        fabMash = (FloatingActionButton)findViewById(R.id.mashButton);
 
         mBoilPW.setVisibility(View.INVISIBLE);
-        mBoilButton = (Button) findViewById(R.id.boilButton);
-        mMashButton =(Button)findViewById(R.id.mashButton);
+
         mSummary = (TextView)findViewById(R.id.summaryLabel);
         mSummary.setVisibility(View.INVISIBLE);
 
 
-        mBoilButton.setOnClickListener(new View.OnClickListener() {
+
+        fabBoil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 mBoilPW.setVisibility(View.INVISIBLE);
 
                 Intent intent = new Intent(MainActivity.this, BoilTimer.class);
+
                 startActivityForResult(intent, 1);
             }
         });
-        mMashButton.setOnClickListener(new View.OnClickListener() {
+        fabMash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.playSoundEffect(android.view.SoundEffectConstants.CLICK);

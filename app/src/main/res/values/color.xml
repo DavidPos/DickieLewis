@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="black_semi_transparent">#B2000000</color>
+<color name="background">#e5e5e5</color>
+<color name="half_black">#808080</color>
+<color name="white">#fafafa</color>
+<color name="white_pressed">#f1f1f1</color>
+<color name="pink">#e91e63</color>
+<color name="pink_pressed">#ec407a</color>
+<color name="blue_semi_transparent">#805677fc</color>
+<color name="blue_semi_transparent_pressed">#80738ffe</color>
+<color name="app_theme_color">#52ABD5</color>
+<color name="button_color">#006D9D</color>
+<color name="blue_sky">#7296CE</color>
+<color name="Teal">#5EBEA5</color>
+<color name="Green">#7FB741</color>
+<color name="Lime_Green">#A6C338</color>
+<color name="yellow">#F1AC1D</color>
+<color name="orange">#E48426</color>
+    <color name="red_mat_dark">#B71C1C</color>
+<color name="accent_sky_blue">#153D6F</color>
+</resources>
